@@ -1,16 +1,16 @@
 
 from chromadb import PersistentClient
 from chromadb.utils import embedding_functions
-from app.core.config import settings
+from app.core import config
 
 class VectorStore:
     def __init__(self, collection_name: str = "rag_collection"):
         # Persistent client (local storage)
-        self.client = PersistentClient(path=settings.CHROMA_DB_PATH)
+        self.client = PersistentClient(path=config.CHROMA_DB_PATH)
 
         # Use OpenAI embeddings (or swap with HuggingFace)
         self.embedding_fn = embedding_functions.OpenAIEmbeddingFunction(
-            api_key=settings.OPENAI_API_KEY,
+            api_key=config.OPENAI_API_KEY,
             model_name="text-embedding-ada-002"
         )
         # Get or create collection
