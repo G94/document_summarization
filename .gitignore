@@ -5,10 +5,11 @@ venv/
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
-
+gradio_app/gradioenv/
 # C extensions
 *.so
-
+*.sqlite3
+*.bin
 # Distribution / packaging
 .Python
 env/
