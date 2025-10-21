@@ -17,6 +17,7 @@ SECRET_KEY: Secret = config("SECRET_KEY", cast=Secret, default="")
 MEMOIZATION_FLAG: bool = config("MEMOIZATION_FLAG", cast=bool, default=True)
 DATABASE_URL: str = config("DATABASE_URL", default="sqlite:///./app.db")
 OPENAI_API_KEY: str = config("OPENAI_API_KEY", cast=Secret, default="")
+LLM_NAME="gpt-3.5-turbo-instruct"
 PROJECT_NAME: str = config("PROJECT_NAME", default="summary_app")
 CHROMA_DB_PATH="/home/gsemi/summaryapp/notebooks/socialdocuments"
 # logging configuration

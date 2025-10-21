@@ -1,11 +1,11 @@
 import asyncio
 from langchain_openai import OpenAI
-from app.core.config import OPENAI_API_KEY
+from app.core.config import OPENAI_API_KEY, LLM_NAME
 
 class LLMClient:
     def __init__(self):
         self.llm=OpenAI(
-            model="gpt-3.5-turbo-instruct",
+            model=LLM_NAME,
             temperature=0,
             max_retries=2,
             api_key=str(OPENAI_API_KEY),  # Replace with your actual OpenAI API key or set as environment variable

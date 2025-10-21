@@ -13,3 +13,12 @@ class Document(BaseModel):
 class RAGResponse(BaseModel):
     summary: str
     retrieved_docs: List[Document]
+
+class SummaryRequest(BaseModel):
+    text: str
+    abstract: str
+    paper_id: int
+
+class SummaryResponse(BaseModel):
+    summary: str
+    paper_id: int

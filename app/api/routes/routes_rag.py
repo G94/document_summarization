@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException
-from models.rag import RAGRequest, RAGResponse
-from app.services.rag_pipeline import RAGPipeline
+from models.rag import RAGRequest, RAGResponse, SummaryResponse, SummaryRequest
+from app.services.rag_pipeline import RAGPipeline, SummaryPipeline
 from app.services.llm_client import get_llm_client
 from app.db.vectorstore import get_vectorstore
 from langchain_core.documents import Document
@@ -19,3 +19,12 @@ async def rag_query(
     # Ensure the response matches RAGResponse schema
     docs = [Document(**d) for d in result["retrieved_docs"]]
     return RAGResponse(summary=result["summary"], retrieved_docs=docs)
+
+@router.post("/summary", response_model=SummaryResponse)
+async def summary_request(
+    request:SummaryRequest,
+    llm=Depends(get_llm_client)
+):
+    pipeline = SummaryPipeline(llm=llm)
+    result = await pipeline.run(text=request.text)
+    return SummaryResponse(summary=result["summary"], paper_id=request.paper_id)

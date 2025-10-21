@@ -1,4 +1,4 @@
-from app.core.prompts import SUMMARY_PROMPT
+from app.core.prompts import SUMMARY_PROMPT, SUMMARY_PROMPT_DOC
 
 class RAGPipeline:
     def __init__(self, retriever, llm):
@@ -11,3 +11,12 @@ class RAGPipeline:
         prompt = SUMMARY_PROMPT.format(context=context, query=query)
         summary = await self.llm.generate(prompt)
         return {"summary": summary, "retrieved_docs": docs}
+    
+class SummaryPipeline:
+    def __init__(self,  llm):
+        self.llm = llm
+
+    async def run(self, text: str):
+        prompt = SUMMARY_PROMPT_DOC.format(document_content=text)
+        summary = await self.llm.generate(prompt)
+        return {"summary": summary}
