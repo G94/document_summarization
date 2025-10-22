@@ -1,4 +1,5 @@
 from app.core.prompts import SUMMARY_PROMPT, SUMMARY_PROMPT_DOC
+from models.metrics import MetricEvaluator, BertScore, RougeScore
 
 class RAGPipeline:
     def __init__(self, retriever, llm):
@@ -15,8 +16,18 @@ class RAGPipeline:
 class SummaryPipeline:
     def __init__(self,  llm):
         self.llm = llm
+        self.summary = ""
 
     async def run(self, text: str):
         prompt = SUMMARY_PROMPT_DOC.format(document_content=text)
-        summary = await self.llm.generate(prompt)
-        return {"summary": summary}
+        self.summary = await self.llm.generate(prompt)
+        return {"summary": self.summary}
+    
+class EvaluationPipeline:
+    def __init__(self):
+        pass
+
+    async def run(self, generated_text:str,  reference_text: str):
+        bertscore=BertScore.compute(reference=reference_text, prediction=generated_text)
+        rougescore=RougeScore.compute(reference=reference_text, prediction=generated_text)
+        return [bertscore, rougescore]

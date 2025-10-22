@@ -1,5 +1,7 @@
 from pydantic import BaseModel, Field
-from typing import Optional, Union, List
+from typing import List
+from models.metrics import MetricResult
+
 
 class RAGRequest(BaseModel):
     query: str = Field(description="query for the rag system")
@@ -22,3 +24,11 @@ class SummaryRequest(BaseModel):
 class SummaryResponse(BaseModel):
     summary: str
     paper_id: int
+
+class EvaluationRequest(BaseModel):
+    generated_text: str
+    reference_text: str
+    paper_id: int
+
+class EvaluationResponse(BaseModel):
+    metrics: List[MetricResult]

@@ -33,7 +33,7 @@ install: generate_dot_env venv
 	uv pip install -e ".[dev]"
 
 run: venv
-	PYTHONPATH=app/ uv run uvicorn main:app --reload --host 0.0.0.0 --port 8080
+	PYTHONPATH=app/ uv run uvicorn main:app  --reload --host 0.0.0.0 --port 8080
 
 deploy: generate_dot_env
 	docker-compose build

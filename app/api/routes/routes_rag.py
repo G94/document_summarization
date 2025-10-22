@@ -1,6 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException
 from models.rag import RAGRequest, RAGResponse, SummaryResponse, SummaryRequest
-from app.services.rag_pipeline import RAGPipeline, SummaryPipeline
+from models.rag import  EvaluationRequest, EvaluationResponse
+from app.services.rag_pipeline import RAGPipeline, SummaryPipeline, EvaluationPipeline
 from app.services.llm_client import get_llm_client
 from app.db.vectorstore import get_vectorstore
 from langchain_core.documents import Document
@@ -28,3 +29,14 @@ async def summary_request(
     pipeline = SummaryPipeline(llm=llm)
     result = await pipeline.run(text=request.text)
     return SummaryResponse(summary=result["summary"], paper_id=request.paper_id)
+
+@router.post("/evaluate", response_model=EvaluationResponse)
+async def evaluation_request(
+    request:EvaluationRequest
+):
+    pipeline = EvaluationPipeline()
+    results = await pipeline.run(
+        generated_text=request.generated_text,
+        reference_text=request.reference_text
+    )
+    return EvaluationResponse(metrics=results)
