@@ -1,21 +1,24 @@
-FROM python:3.11.0
+FROM python:3.12-slim
 
-ENV PYTHONUNBUFFERED 1
+ENV PYTHONUNBUFFERED=1
 
 WORKDIR /app
 
-COPY pyproject.toml ./
+COPY ./requirements.txt /app/requirements.txt
+
+RUN ls -al /app
+
+# RUN python -m venv .venv
 RUN pip install --upgrade pip && \
-    pip install uv && \
-    uv pip install -e .  # Installs dependencies using uv
+    pip install --no-cache-dir -r /app/requirements.txt
 
-ARG DEV=false
-RUN if [ "$DEV" = "true" ] ; then uv pip install -e .[dev] ; fi
 
-COPY ./app/ ./
-COPY ./ml/model/ ./ml/model/
 
-ENV PYTHONPATH "${PYTHONPATH}:/app"
+### copy the rest of the documents 
+COPY ./app .
+# COPY ./Makefile /app/Makefile
 
+# ENV PYTHONPATH "${PYTHONPATH}:/app"
+ENV PYTHONPATH="/app"
 EXPOSE 8080
 CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8080"]

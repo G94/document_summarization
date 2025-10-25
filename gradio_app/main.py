@@ -69,7 +69,7 @@ with gr.Blocks(title="Social Science Paper Summarizer") as demo:
     btn = gr.Button("Submit")
     btn_evaluate = gr.Button("Evaluate")
     btn.click(get_summary, inputs=[text_in, abstract_in, paper_id_in], outputs=out)
-    btn_evaluate.click(evaluate_results, inputs=[abstract_in, out, paper_id_in], outputs=metrics)
+    btn_evaluate.click(evaluate_results, inputs=[out, abstract_in,  paper_id_in], outputs=metrics)
 demo.launch()
 
 

@@ -1,6 +1,6 @@
 import asyncio
 from langchain_openai import OpenAI
-from app.core.config import OPENAI_API_KEY, LLM_NAME
+from core.config import OPENAI_API_KEY, LLM_NAME
 
 class LLMClient:
     def __init__(self):

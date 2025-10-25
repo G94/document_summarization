@@ -1,9 +1,9 @@
 from fastapi import APIRouter, Depends, HTTPException
 from models.rag import RAGRequest, RAGResponse, SummaryResponse, SummaryRequest
 from models.rag import  EvaluationRequest, EvaluationResponse
-from app.services.rag_pipeline import RAGPipeline, SummaryPipeline, EvaluationPipeline
-from app.services.llm_client import get_llm_client
-from app.db.vectorstore import get_vectorstore
+from services.rag_pipeline import RAGPipeline, SummaryPipeline, EvaluationPipeline
+from services.llm_client import get_llm_client
+from db.vectorstore import get_vectorstore
 from langchain_core.documents import Document
 
 router= APIRouter()
@@ -35,6 +35,8 @@ async def evaluation_request(
     request:EvaluationRequest
 ):
     pipeline = EvaluationPipeline()
+    print(request.reference_text)
+    print(request.generated_text)
     results = await pipeline.run(
         generated_text=request.generated_text,
         reference_text=request.reference_text

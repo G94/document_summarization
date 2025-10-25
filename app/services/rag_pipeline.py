@@ -1,4 +1,4 @@
-from app.core.prompts import SUMMARY_PROMPT, SUMMARY_PROMPT_DOC
+from core.prompts import SUMMARY_PROMPT, SUMMARY_PROMPT_DOC
 from models.metrics import MetricEvaluator, BertScore, RougeScore
 
 class RAGPipeline:
@@ -28,6 +28,9 @@ class EvaluationPipeline:
         pass
 
     async def run(self, generated_text:str,  reference_text: str):
-        bertscore=BertScore.compute(reference=reference_text, prediction=generated_text)
-        rougescore=RougeScore.compute(reference=reference_text, prediction=generated_text)
-        return [bertscore, rougescore]
+        # bertscore=BertScore.compute(reference=reference_text, prediction=generated_text)
+        print(reference_text)
+        print(generated_text)
+        print("EvaluationPipeline")
+        rougescore=RougeScore.computa(ref=reference_text, pred=generated_text)
+        return [rougescore]

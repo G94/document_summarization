@@ -1,7 +1,7 @@
 
 from chromadb import PersistentClient
 from chromadb.utils import embedding_functions
-from app.core import config
+from core import config
 
 class VectorStore:
     def __init__(self, collection_name: str = "rag_collection"):
